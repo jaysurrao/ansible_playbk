@@ -1,0 +1,35 @@
+#ignore this file as i misunderstood the question thinking that i should two docker container using playbook
+- hosts: all
+  become: true
+
+  tasks:
+    - name: log into docker hub
+      docker_login:
+        username: "surenraoj"
+        password: "Rundockerfromansible"
+        email: "surenraoj@gmail.com"
+
+    - name: ensure if debian container is running
+      docker_container:
+        name: debian
+        state: started
+        image: "debian"
+        pull: true
+        ports:
+          - "4000:4000"
+    
+    - name: ensure centos container is running
+      docker_container:
+        name: centos
+        state: started
+        image: "centos"
+        pull: true
+        ports:
+          - "5000:5000"
+
+    - name: Log out of docker hub
+      docker_login:
+        state: absent
+
+    - name: install test-role from part 1
+      command: ansible-galaxy install -r requirements.yml

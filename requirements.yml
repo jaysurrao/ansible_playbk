@@ -1,0 +1,5 @@
+---
+- name: test-role
+  scm: git
+  src: https://github.com/jaysurrao/ansible_roles 
+  version: master  
